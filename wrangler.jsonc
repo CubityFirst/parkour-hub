@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Same worker name as the original Opus deploy, so it keeps the parkour.cubityfir.st custom domain.
+  "name": "rooftop-flow",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "parkour.cubityfir.st", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

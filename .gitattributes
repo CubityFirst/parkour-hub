@@ -1,0 +1,2 @@
+# Recovered builds are served byte-for-byte; never convert their line endings.
+games/prebuilt/** -text

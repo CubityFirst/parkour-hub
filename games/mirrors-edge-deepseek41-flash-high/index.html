@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dcecf7" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e0241d'/%3E%3Cpath d='M8 22 L16 8 L24 22 Z' fill='%23ffffff'/%3E%3C/svg%3E"
+    />
+    <title>ROOFTOP FLOW — a parkour run</title>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game-canvas"></canvas>
+
+      <div id="vignette"></div>
+      <div id="speed-overlay"></div>
+
+      <!-- ------------------------------------------------------------------ HUD -->
+      <div id="hud" class="hidden">
+        <div class="hud-top">
+          <div class="hud-block">
+            <span class="hud-label">CHECKPOINT</span>
+            <span id="cp-value" class="hud-value">0 / 4</span>
+          </div>
+          <div class="timer-wrap">
+            <span class="timer-label">RUN TIME</span>
+            <span id="timer" class="timer">00:00.00</span>
+          </div>
+          <div class="hud-block right">
+            <span class="hud-label">BEST</span>
+            <span id="best-value" class="hud-value">--:--.--</span>
+          </div>
+        </div>
+
+        <div id="section-toast" class="section-toast"></div>
+        <div id="checkpoint-toast" class="checkpoint-toast">
+          <span class="cp-dot"></span>
+          <span id="checkpoint-toast-text">CHECKPOINT 1</span>
+        </div>
+
+        <div id="crosshair" class="crosshair">
+          <span class="crosshair-line top"></span>
+          <span class="crosshair-line bottom"></span>
+          <span class="crosshair-line left"></span>
+          <span class="crosshair-line right"></span>
+          <span class="crosshair-dot"></span>
+        </div>
+
+        <div id="hint" class="hint">
+          <span class="hint-bar"></span>
+          <span id="hint-text"></span>
+        </div>
+
+        <div class="hud-bottom">
+          <div class="flow-meter">
+            <div class="flow-row">
+              <span class="flow-label">FLOW</span>
+              <span id="flow-speed" class="flow-speed">0.0</span>
+            </div>
+            <div class="flow-track"><div id="flow-fill" class="flow-fill"></div></div>
+            <div id="move-state" class="move-state">ON FOOT</div>
+          </div>
+          <div class="hud-keys">
+            <span><b>R</b> RESTART</span>
+            <span><b>ESC</b> PAUSE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- --------------------------------------------------------------- MENU -->
+      <div id="menu" class="screen menu-screen">
+        <div class="menu-scrim"></div>
+        <div class="menu-content">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> CITY ROUTE 01 — ROOFTOP PARKOUR</div>
+          <h1 class="title">ROOFTOP<br /><span class="title-red">FLOW</span></h1>
+          <p class="tagline">Speed is a skill. Keep your line.<br />Cross the rooftops. Don't stop.</p>
+
+          <div class="menu-actions">
+            <button id="start-btn" class="btn btn-primary">
+              <span>START RUN</span>
+              <span class="btn-arrow">→</span>
+            </button>
+            <button id="controls-btn" class="btn btn-ghost">CONTROLS</button>
+          </div>
+
+          <div class="menu-settings">
+            <label class="setting-row">
+              <span class="setting-label">MOUSE SENSITIVITY</span>
+              <input id="sensitivity" class="range" type="range" min="0.3" max="2.5" step="0.05" value="1" />
+              <span id="sens-value" class="setting-value">1.0</span>
+            </label>
+            <label class="setting-row toggle-row">
+              <span class="setting-label">REDUCE CAMERA MOTION</span>
+              <input id="reduce-motion" type="checkbox" />
+              <span class="switch"><span class="switch-knob"></span></span>
+            </label>
+          </div>
+
+          <div class="menu-footer">
+            <span id="menu-best">BEST RUN — --:--.--</span>
+            <span class="footer-hint">WASD + MOUSE · SHIFT TO SPRINT</span>
+          </div>
+        </div>
+
+        <div class="menu-side">
+          <div class="side-rule"></div>
+          <div class="side-copy">A FIRST-PERSON<br />PARKOUR RUN</div>
+          <div class="side-index">01 / 06</div>
+        </div>
+
+        <!-- Controls panel -->
+        <div id="controls-panel" class="panel controls-panel hidden">
+          <div class="panel-head">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> MOVEMENT MANUAL</span>
+            <button id="controls-close" class="icon-btn" aria-label="Close controls">×</button>
+          </div>
+          <h2 class="panel-title">CONTROLS</h2>
+          <div class="control-grid">
+            <div class="control-row"><span class="keys"><b>W</b><b>A</b><b>S</b><b>D</b></span><span>Move</span></div>
+            <div class="control-row"><span class="keys"><b>MOUSE</b></span><span>Look</span></div>
+            <div class="control-row"><span class="keys"><b>SHIFT</b></span><span>Sprint</span></div>
+            <div class="control-row"><span class="keys"><b>SPACE</b></span><span>Jump / wall jump</span></div>
+            <div class="control-row"><span class="keys"><b>CTRL</b><b>C</b></span><span>Slide</span></div>
+            <div class="control-row"><span class="keys"><b>E</b></span><span>Vault / interact</span></div>
+            <div class="control-row"><span class="keys"><b>R</b></span><span>Restart from checkpoint</span></div>
+            <div class="control-row"><span class="keys"><b>ESC</b></span><span>Pause</span></div>
+          </div>
+          <p class="panel-note">
+            Jump into a red wall to wall run. Slide under red vents. Release SPACE early for a shorter jump.
+          </p>
+          <button id="controls-close-btn" class="btn btn-primary">GOT IT</button>
+        </div>
+      </div>
+
+      <!-- --------------------------------------------------------------- PAUSE -->
+      <div id="pause" class="screen pause-screen hidden">
+        <div class="pause-panel">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> RUN PAUSED</span>
+          <h2 class="pause-title">HOLD<br />YOUR<br /><span class="title-red">BREATH</span></h2>
+          <div class="pause-stats">
+            <div><span class="hud-label">TIME</span><span id="pause-time" class="stat-value">00:00.00</span></div>
+            <div><span class="hud-label">CHECKPOINT</span><span id="pause-cp" class="stat-value">0 / 4</span></div>
+          </div>
+          <div class="pause-actions">
+            <button id="resume-btn" class="btn btn-primary"><span>RESUME</span><span class="btn-arrow">→</span></button>
+            <button id="restart-btn" class="btn btn-ghost">RESTART RUN</button>
+            <button id="quit-btn" class="btn btn-ghost">QUIT TO MENU</button>
+          </div>
+          <div class="pause-settings">
+            <label class="setting-row">
+              <span class="setting-label">SENSITIVITY</span>
+              <input id="pause-sensitivity" class="range" type="range" min="0.3" max="2.5" step="0.05" value="1" />
+            </label>
+            <label class="setting-row toggle-row">
+              <span class="setting-label">REDUCE MOTION</span>
+              <input id="pause-reduce-motion" type="checkbox" />
+              <span class="switch"><span class="switch-knob"></span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- -------------------------------------------------------------- FINISH -->
+      <div id="finish" class="screen finish-screen hidden">
+        <div class="finish-scrim"></div>
+        <div class="finish-content">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> ROUTE 01 COMPLETE</span>
+          <h1 class="finish-title">LEVEL<br /><span class="title-red">COMPLETE</span></h1>
+          <div class="finish-time-block">
+            <span class="hud-label">YOUR TIME</span>
+            <div id="finish-time" class="finish-time">00:00.00</div>
+            <div id="new-best" class="new-best hidden">NEW BEST RUN</div>
+          </div>
+          <div class="finish-meta">
+            <span id="finish-best">BEST — --:--.--</span>
+            <span id="finish-cp">CHECKPOINTS — 4 / 4</span>
+          </div>
+          <div class="finish-actions">
+            <button id="again-btn" class="btn btn-primary"><span>RUN AGAIN</span><span class="btn-arrow">→</span></button>
+            <button id="finish-menu-btn" class="btn btn-ghost">MENU</button>
+          </div>
+        </div>
+        <div class="finish-mark">
+          <span>01</span>
+          <span>FINISH</span>
+        </div>
+      </div>
+
+      <div id="fade" class="fade"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

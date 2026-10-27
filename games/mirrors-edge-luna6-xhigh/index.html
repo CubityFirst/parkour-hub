@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#c8e5f5" />
+    <meta name="description" content="A first-person rooftop parkour run through a bright city." />
+    <title>ROOFTOP FLOW — City Runner</title>
+  </head>
+  <body>
+    <main id="game">
+      <div id="game-canvas" aria-label="3D rooftop parkour game"></div>
+
+      <section id="hud" class="hud is-hidden" aria-live="polite">
+        <div class="hud-brand"><span class="brand-mark"></span> ROOFTOP FLOW</div>
+        <div class="hud-timer"><span class="eyebrow">RUN TIME</span><strong id="timer">0:00.00</strong></div>
+        <div class="crosshair" aria-hidden="true"><i></i><i></i></div>
+        <div id="action-readout" class="action-readout">RUN</div>
+        <div id="checkpoint-toast" class="checkpoint-toast"></div>
+        <div id="run-hint" class="run-hint">WASD move <b>SHIFT</b> sprint <b>SPACE</b> jump</div>
+        <div class="hud-help">ESC <span>PAUSE</span></div>
+      </section>
+
+      <section id="menu" class="screen">
+        <div class="screen-wash"></div>
+        <div class="menu-card">
+          <div class="eyebrow red">CITY RUN / 01</div>
+          <h1>ROOFTOP<br /><em>FLOW</em></h1>
+          <p class="lede">Find your line. Keep your speed.</p>
+          <p class="description">A rooftop route through the bright side of the city. Sprint, vault, slide and wall-run to the finish.</p>
+          <div class="menu-actions">
+            <button id="start-button" class="button button-primary">START RUN <span>→</span></button>
+            <button id="controls-button" class="button button-quiet">CONTROLS</button>
+          </div>
+          <div id="controls-panel" class="controls-panel is-hidden">
+            <div><kbd>W A S D</kbd><span>Move</span></div>
+            <div><kbd>SHIFT</kbd><span>Sprint</span></div>
+            <div><kbd>SPACE</kbd><span>Jump / wall kick</span></div>
+            <div><kbd>CTRL / C</kbd><span>Slide</span></div>
+            <div><kbd>E</kbd><span>Vault / mantle</span></div>
+            <div><kbd>R</kbd><span>Restart checkpoint</span></div>
+            <div><kbd>MOUSE</kbd><span>Look around</span></div>
+          </div>
+          <div class="settings-row">
+            <label for="sensitivity">MOUSE SENSITIVITY</label>
+            <input id="sensitivity" type="range" min="0.6" max="2" step="0.05" value="1" />
+            <label class="motion-toggle"><input id="reduced-motion" type="checkbox" /> Reduce camera motion</label>
+          </div>
+          <div class="menu-footer"><span>FIRST PERSON PARKOUR</span><span>01 — 06</span></div>
+        </div>
+        <div class="menu-caption">NORTH TOWER DISTRICT&nbsp; / &nbsp;SUNRISE</div>
+      </section>
+
+      <section id="pause-screen" class="screen is-hidden">
+        <div class="screen-wash"></div>
+        <div class="modal-card">
+          <div class="eyebrow red">TAKE A BREATH</div>
+          <h2>RUN<br /><em>PAUSED</em></h2>
+          <p class="description">Your last checkpoint is waiting.</p>
+          <button id="resume-button" class="button button-primary">RESUME <span>→</span></button>
+          <button id="restart-button" class="button button-quiet">RESTART CHECKPOINT</button>
+          <div class="menu-footer"><span>ESC TO RESUME</span><span id="pause-time">0:00</span></div>
+        </div>
+      </section>
+
+      <section id="finish-screen" class="screen is-hidden">
+        <div class="screen-wash"></div>
+        <div class="modal-card finish-card">
+          <div class="eyebrow red">ROUTE COMPLETE</div>
+          <h2>LEVEL<br /><em>COMPLETE</em></h2>
+          <p class="description">The skyline is yours.</p>
+          <div class="time-result"><span>YOUR TIME</span><strong id="finish-time">0:00.00</strong></div>
+          <div class="best-result"><span>PERSONAL BEST</span><strong id="best-time">—</strong></div>
+          <button id="finish-restart-button" class="button button-primary">RUN IT AGAIN <span>→</span></button>
+          <div class="menu-footer"><span>ROOFTOP FLOW</span><span>END OF LINE</span></div>
+        </div>
+      </section>
+
+      <div id="loading" class="loading-screen"><div class="loading-logo">RF</div><span>BUILDING THE CITY</span></div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

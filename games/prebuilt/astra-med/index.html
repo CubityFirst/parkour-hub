@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head>
+<script>/* parkour-hub: per-game localStorage */(()=>{try{
+const L=localStorage,P="astra-med:",S=Storage.prototype;
+const get=S.getItem,set=S.setItem,del=S.removeItem,key=S.key,len=Object.getOwnPropertyDescriptor(S,'length').get;
+const mine=()=>{const o=[];for(let i=0,n=len.call(L);i<n;i++){const k=key.call(L,i);if(k!==null&&k.startsWith(P))o.push(k)}return o};
+S.getItem=function(k){return get.call(this,this===L?P+k:k)};
+S.setItem=function(k,v){return set.call(this,this===L?P+k:k,v)};
+S.removeItem=function(k){return del.call(this,this===L?P+k:k)};
+S.key=function(i){if(this!==L)return key.call(this,i);const k=mine()[i];return k===undefined?null:k.slice(P.length)};
+S.clear=(c=>function(){if(this!==L)return c.call(this);for(const k of mine())del.call(L,k)})(S.clear);
+Object.defineProperty(S,'length',{configurable:true,get(){return this===L?mine().length:len.call(this)}});
+}catch(e){}})();</script><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#e73132"/><meta name="description" content="Find your line above the city. A first-person rooftop parkour time trial with sprinting, sliding, vaulting and wall running."/><title>ASTRA — Above the ordinary</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e73132'/%3E%3Cpath d='M12 48L32 12l20 36H40l-8-16-8 16z' fill='white'/%3E%3C/svg%3E"/>  <script type="module" crossorigin src="/astra-med/assets/index-aNt_Hhm6.js"></script>
+  <link rel="stylesheet" crossorigin href="/astra-med/assets/index-B7yPWGBp.css">
+</head><body><div id="app"></div></body></html>

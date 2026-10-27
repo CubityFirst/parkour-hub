@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // parkour.cubityfir.st is now served by ../parkour-hub (worker "rooftop-flow"), which includes this game at /opus/.
+  "name": "opus55-parkour",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "opus55-parkour.cubityfir.st", "custom_domain": true }
+  ],
+  "observability": { "enabled": true }
+}

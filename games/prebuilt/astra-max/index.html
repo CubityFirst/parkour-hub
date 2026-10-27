@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+<script>/* parkour-hub: per-game localStorage */(()=>{try{
+const L=localStorage,P="astra-max:",S=Storage.prototype;
+const get=S.getItem,set=S.setItem,del=S.removeItem,key=S.key,len=Object.getOwnPropertyDescriptor(S,'length').get;
+const mine=()=>{const o=[];for(let i=0,n=len.call(L);i<n;i++){const k=key.call(L,i);if(k!==null&&k.startsWith(P))o.push(k)}return o};
+S.getItem=function(k){return get.call(this,this===L?P+k:k)};
+S.setItem=function(k,v){return set.call(this,this===L?P+k:k,v)};
+S.removeItem=function(k){return del.call(this,this===L?P+k:k)};
+S.key=function(i){if(this!==L)return key.call(this,i);const k=mine()[i];return k===undefined?null:k.slice(P.length)};
+S.clear=(c=>function(){if(this!==L)return c.call(this);for(const k of mine())del.call(L,k)})(S.clear);
+Object.defineProperty(S,'length',{configurable:true,get(){return this===L?mine().length:len.call(this)}});
+}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ef3d30" />
+    <meta name="description" content="Find your flow above the city. A free first-person rooftop parkour game with sprinting, sliding, vaulting and wall runs." />
+    <link rel="icon" type="image/svg+xml" href="/astra-max/favicon.svg" />
+    <title>ASTRAMAX — Parkour above the ordinary</title>
+    <script type="module" crossorigin src="/astra-max/assets/index-DdndU-t9.js"></script>
+    <link rel="modulepreload" crossorigin href="/astra-max/assets/three-DOWemOi2.js">
+    <link rel="stylesheet" crossorigin href="/astra-max/assets/index-G04sPYiU.css">
+  </head>
+  <body>
+    <canvas id="game" aria-label="Three-dimensional rooftop parkour game"></canvas>
+    <div id="app"></div>
+  </body>
+</html>

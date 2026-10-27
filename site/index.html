@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e2231a">
+  <meta name="description" content="<!-- Count --> first-person rooftop parkour games built from the same brief by <!-- models --> AI models. Pick a runner.">
+  <title>Rooftop Flow: Pick a Runner</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e2231a'/%3E%3Cpath d='M14 50L34 14h8L22 50z M34 50l10-18h8L42 50z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:ital,wght@1,800&display=swap">
+  <style>
+    :root {
+      --red: #e2231a;
+      --ink: #111214;
+      --muted: #5d6168;
+      --line: #e3e5e8;
+      --paper: #f6f7f8;
+      --card: #ffffff;
+      --sky: linear-gradient(160deg, #dfe9f2 0%, #f4f7fa 55%, #ffffff 100%);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Barlow", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      background: var(--sky);
+      border-bottom: 1px solid var(--line);
+    }
+    /* Skyline silhouette: plain white blocks with one red accent. */
+    header::after {
+      content: "";
+      position: absolute; inset: auto 0 0 0; height: 150px;
+      background:
+        linear-gradient(var(--red), var(--red)) 71% 38% / 3.5% 62% no-repeat,
+        linear-gradient(#fff, #fff) 4% 100% / 9% 55% no-repeat,
+        linear-gradient(#fff, #fff) 15% 100% / 6% 80% no-repeat,
+        linear-gradient(#fff, #fff) 23% 100% / 11% 42% no-repeat,
+        linear-gradient(#fff, #fff) 58% 100% / 8% 70% no-repeat,
+        linear-gradient(#fff, #fff) 68% 100% / 10% 50% no-repeat,
+        linear-gradient(#fff, #fff) 80% 100% / 7% 90% no-repeat,
+        linear-gradient(#fff, #fff) 90% 100% / 12% 60% no-repeat;
+      opacity: .85;
+      pointer-events: none;
+    }
+    .hero {
+      position: relative; z-index: 1;
+      max-width: 1180px; margin: 0 auto;
+      padding: 72px 24px 190px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--red);
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 3px; background: var(--red); }
+    h1 {
+      margin: 16px 0 14px;
+      font-family: "Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+      font-weight: 800; font-style: italic; text-transform: uppercase;
+      font-size: clamp(44px, 8vw, 96px); line-height: .9; letter-spacing: -.01em;
+    }
+    h1 em { font-style: italic; color: var(--red); }
+    .lede { max-width: 560px; margin: 0; font-size: 18px; line-height: 1.5; color: var(--muted); }
+
+    main { max-width: 1180px; margin: -64px auto 0; padding: 0 24px 64px; position: relative; z-index: 2; }
+
+    /* Jump links to each company section, sitting on the hero's bottom edge. */
+    .companies {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      padding: 14px 18px; margin-bottom: 8px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+      box-shadow: 0 10px 28px rgba(17, 18, 20, .06);
+    }
+    .companies::before {
+      content: "Jump to"; margin-right: 6px;
+      font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    }
+    .companies a {
+      padding: 6px 12px; border: 1px solid var(--line); border-radius: 2px;
+      font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      transition: border-color .15s ease, color .15s ease;
+    }
+    .companies a:hover, .companies a:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+
+    /* Company sections share the card grid's columns: each spans as many columns as it has
+       cards (up to 3), so one-model companies sit side by side instead of a row each. */
+    .sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; }
+    .company { grid-column: span 1; min-width: 0; padding-top: 40px; scroll-margin-top: 16px; }
+    .company[data-span="2"] { grid-column: span 2; }
+    .company[data-span="3"] { grid-column: 1 / -1; }
+    .company[data-span="1"] .grid { grid-template-columns: 1fr; }
+    .company[data-span="2"] .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .company[data-span="3"] .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 1080px) {
+      .sections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .company[data-span="2"], .company[data-span="3"] { grid-column: 1 / -1; }
+      .company[data-span="3"] .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .sections { grid-template-columns: 1fr; }
+      .company { grid-column: 1 / -1; }
+      .company .grid { grid-template-columns: 1fr; }
+    }
+    .company-head {
+      display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 18px; padding-bottom: 10px; border-bottom: 3px solid var(--ink);
+    }
+    .company-head h2 {
+      margin: 0;
+      font-family: "Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+      font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 40px; line-height: 1;
+    }
+    .company-head h2::after { content: "."; color: var(--red); }
+    .company-head span { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .grid {
+      display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    .card {
+      display: flex; flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .card:hover, .card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 34px rgba(17, 18, 20, .12);
+      border-color: var(--red);
+      outline: none;
+    }
+    .shot {
+      position: relative; aspect-ratio: 16 / 9;
+      background:
+        linear-gradient(var(--red), var(--red)) 62% 100% / 7% 58% no-repeat,
+        linear-gradient(#fff, #fff) 12% 100% / 18% 40% no-repeat,
+        linear-gradient(#fff, #fff) 36% 100% / 14% 66% no-repeat,
+        linear-gradient(#fff, #fff) 80% 100% / 20% 46% no-repeat,
+        linear-gradient(170deg, #cfdeea, #eef3f7);
+    }
+    .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .num {
+      position: absolute; left: 14px; top: 10px;
+      font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+      font-weight: 800; font-style: italic; font-size: 34px; color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+    }
+    .body { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px 20px; flex: 1; }
+    .model {
+      font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    }
+    .model span {
+      margin-left: 6px; padding: 2px 6px; border-radius: 2px;
+      background: var(--ink); color: #fff; letter-spacing: .1em;
+    }
+    .card h3 {
+      margin: 0;
+      font-family: "Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+      font-weight: 800; font-style: italic; text-transform: uppercase; font-size: 30px; line-height: 1;
+    }
+    .card p { margin: 0; color: var(--muted); line-height: 1.45; flex: 1; }
+    .play {
+      align-self: flex-start; margin-top: 8px;
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 14px;
+      color: #fff; background: var(--red); padding: 10px 16px; border-radius: 2px;
+    }
+    .play span { display: inline-block; transition: transform .18s ease; }
+    .card:hover .play span { transform: translateX(4px); }
+
+    /* Model families: one card, with a segmented picker choosing which build it shows. */
+    .family:focus-within { border-color: var(--red); }
+    .v-shot { position: absolute; inset: 0; }
+    .v-info { display: flex; flex-direction: column; gap: 8px; flex: 1; border-radius: 2px; }
+    .v-info:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+    .efforts { position: relative; display: flex; min-width: 0; margin: 2px 0 6px; padding: 0; border: 0; }
+    .efforts legend, .efforts input {
+      position: absolute; width: 1px; height: 1px; margin: 0; padding: 0;
+      overflow: hidden; clip-path: inset(50%); white-space: nowrap; opacity: 0;
+    }
+    .efforts label {
+      flex: 1; margin-left: -1px; padding: 7px 4px;
+      border: 1px solid var(--line);
+      font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; text-align: center;
+      color: var(--muted); cursor: pointer;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .efforts label:first-of-type { margin-left: 0; border-radius: 2px 0 0 2px; }
+    .efforts label:last-of-type { border-radius: 0 2px 2px 0; }
+    .efforts label:hover { color: var(--ink); }
+    .efforts input:checked + label { position: relative; z-index: 1; background: var(--ink); border-color: var(--ink); color: #fff; }
+    .efforts input:focus-visible + label { position: relative; z-index: 2; outline: 2px solid var(--red); outline-offset: 2px; }
+    /* Without :has() every build in a family stays visible, stacked, rather than none. */
+    @supports selector(:has(*)) {
+      .family .v-shot, .family .v-info { display: none; }
+        /* VARIANTS */
+    }
+
+    footer {
+      max-width: 1180px; margin: 0 auto; padding: 0 24px 48px;
+      color: var(--muted); font-size: 14px; line-height: 1.6;
+    }
+    footer strong { color: var(--ink); }
+
+    @media (max-width: 520px) {
+      .hero { padding: 48px 16px 170px; }
+      main { padding: 0 16px 48px; }
+      footer { padding: 0 16px 40px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .play span, .efforts label, .companies a { transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="eyebrow">One brief, <!-- models --> runners</div>
+      <h1>Pick your<br><em>runner.</em></h1>
+      <p class="lede"><!-- Count --> first-person rooftop parkour games from <!-- models --> AI models by <!-- companies --> companies, all built from the same Mirror's Edge-inspired brief. Where a model ran at several effort levels, pick one on its card.</p>
+    </div>
+  </header>
+  <main>
+    <nav class="companies" aria-label="Companies"><!-- COMPANY-NAV --></nav>
+    <div class="sections"><!-- GAMES --></div>
+  </main>
+  <footer>
+    <p><strong>Controls (all versions):</strong> WASD to move, mouse to look, Space to jump, Shift to sprint, Ctrl or C to slide. Click into a game to capture the mouse; Esc pauses. Desktop browser with WebGL, keyboard and mouse needed.</p>
+  </footer>
+</body>
+</html>
