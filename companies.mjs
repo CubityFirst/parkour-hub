@@ -12,6 +12,7 @@ export const companies = [
   { name: 'Moonshot AI', match: prefix('Kimi') },
   { name: 'Z.ai', match: prefix('GLM') },
   { name: 'Alibaba', match: prefix('Qwen') },
+  { name: 'MiniMax', match: prefix('MiniMax') },
 ];
 export const OTHER = 'Other';
 

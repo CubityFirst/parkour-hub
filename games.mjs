@@ -3,14 +3,9 @@
 // packages (added with scripts/ingest.mjs) whose card text comes from their manifest;
 // `prebuilt` entries are finished builds copied in as-is.
 export const games = [
-  {
-    slug: 'opus',
-    dir: 'games/mirrors-edge-opus-55-high',
-    model: 'Opus 5.5',
-    effort: 'high',
-    title: 'Rooftop Flow',
-    blurb: 'Procedural rooftops, momentum-driven movement and a checkpointed time trial.',
-  },
+  // The original /opus/ build (15 October, source in games/mirrors-edge-opus-55-high) was
+  // replaced by the bench runs; the worker redirects /opus/ to /opus-high/, and the old
+  // build is in ../parkour-hub-archive.
   // The original /sonnet/ build (15 October) was replaced by the bench runs; the worker
   // redirects /sonnet/ to /sonnet-high/, and the old build is in ../parkour-hub-archive.
   {
@@ -220,5 +215,9 @@ export const games = [
   {
     slug: 'opus-xhigh',
     pkg: '../parkour-bench/packages/opus-xhigh',
+  },
+  {
+    slug: 'opus-high',
+    pkg: '../parkour-bench/packages/opus-high',
   },
 ];

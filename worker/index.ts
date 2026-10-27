@@ -12,6 +12,7 @@ interface Env {
 const MOVED: [RegExp, string][] = [
   [/^\/haiku(\/.*)?$/, '/haiku-high/'], // original Haiku 5.5 build, replaced by the bench runs
   [/^\/sonnet(\/.*)?$/, '/sonnet-high/'], // original Sonnet 5.5 build, replaced by the bench runs
+  [/^\/opus(\/.*)?$/, '/opus-high/'], // original Opus 5.5 build, replaced by the bench runs
 ];
 
 export default {

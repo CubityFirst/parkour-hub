@@ -6,8 +6,7 @@ different model:
 
 | Path | Project folder | Model |
 | --- | --- | --- |
-| `/opus/` | `games/mirrors-edge-opus-55-high` | Opus 5.5 (high) |
-| `/opus-low/`, `/opus-medium/`, `/opus-xhigh/`, `/opus-max/` | `../parkour-bench/packages/opus-*` | Opus 5.5 (low, medium, xhigh, max) |
+| `/opus-low/` … `/opus-max/` | `../parkour-bench/packages/opus-*` | Opus 5.5 (low, medium, high, xhigh, max) |
 | `/sonnet-low/` … `/sonnet-max/` | `../parkour-bench/packages/sonnet-*` | Sonnet 5.5 (low, medium, high, xhigh, max) |
 | `/haiku-low/` … `/haiku-max/` | `../parkour-bench/packages/haiku-*` | Haiku 5.5 (low, medium, high, xhigh, max) |
 | `/astra-med/` | `games/prebuilt/astra-med` | Astra (medium), prebuilt |
@@ -36,9 +35,10 @@ git clone https://github.com/CubityFirst/parkour-hub.git
 ```
 
 The root `/` is a landing page (`site/index.html`) linking to each game. The original
-`/haiku/` and `/sonnet/` builds (15 October) were replaced by the bench runs: the worker
-redirects them to `/haiku-high/` and `/sonnet-high/`, and the old builds are kept in
-`../parkour-hub-archive/`.
+`/haiku/`, `/sonnet/` and `/opus/` builds (15 October) were replaced by the bench runs: the
+worker redirects them to `/haiku-high/`, `/sonnet-high/` and `/opus-high/`, and the old
+builds are kept in `../parkour-hub-archive/`. The original Opus source is still in
+`games/mirrors-edge-opus-55-high`, but it isn't on the site.
 
 ## How it works
 
