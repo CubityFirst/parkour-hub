@@ -23,6 +23,7 @@ different model:
 | `/luna-max/` | `../parkour-bench/packages/luna-max` | GPT-6-Luna (max) |
 | `/terra-low/` … `/terra-max/` | `../parkour-bench/packages/terra-*` | GPT-5.6-Terra (low, medium, high, xhigh, max) |
 | `/terra61-low/` … `/terra61-max/` | `../parkour-bench/packages/terra61-*` | GPT-6.1-Terra (low, medium, high, xhigh, max) |
+| `/minimax-xhigh/`, `/minimax-max/` | `../parkour-bench/packages/minimax-*` | MiniMax M3.1 Flash (xhigh, max) |
 | `/grok-low/` … `/grok-xhigh/` | `../parkour-bench/packages/grok-*` | Grok 4.7 (low, medium, high, xhigh; it has no max) |
 
 The `../parkour-bench/packages/*` games come from

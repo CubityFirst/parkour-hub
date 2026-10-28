@@ -220,4 +220,12 @@ export const games = [
     slug: 'opus-high',
     pkg: '../parkour-bench/packages/opus-high',
   },
+  {
+    slug: 'minimax-xhigh',
+    pkg: '../parkour-bench/packages/minimax-xhigh',
+  },
+  {
+    slug: 'minimax-max',
+    pkg: '../parkour-bench/packages/minimax-max',
+  },
 ];
