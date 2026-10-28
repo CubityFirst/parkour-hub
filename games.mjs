@@ -228,4 +228,12 @@ export const games = [
     slug: 'minimax-max',
     pkg: '../parkour-bench/packages/minimax-max',
   },
+  {
+    slug: 'deepseek-v4pro-high',
+    pkg: '../parkour-bench/packages/deepseek-v4pro-high',
+  },
+  {
+    slug: 'kimi-k27-code',
+    pkg: '../parkour-bench/packages/kimi-k27-code',
+  },
 ];
