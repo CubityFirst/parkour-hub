@@ -236,4 +236,8 @@ export const games = [
     slug: 'kimi-k27-code',
     pkg: '../parkour-bench/packages/kimi-k27-code',
   },
+  {
+    slug: 'minimax-high',
+    pkg: '../parkour-bench/packages/minimax-high',
+  },
 ];
