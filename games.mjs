@@ -240,4 +240,8 @@ export const games = [
     slug: 'minimax-high',
     pkg: '../parkour-bench/packages/minimax-high',
   },
+  {
+    slug: 'minimax-medium',
+    pkg: '../parkour-bench/packages/minimax-medium',
+  },
 ];

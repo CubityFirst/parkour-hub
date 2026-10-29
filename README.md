@@ -25,7 +25,7 @@ different model:
 | `/terra61-low/` … `/terra61-max/` | `../parkour-bench/packages/terra61-*` | GPT-6.1-Terra (low, medium, high, xhigh, max) |
 | `/kimi-k27-code/` | `../parkour-bench/packages/kimi-k27-code` | Kimi K2.7 Code (no effort setting) |
 | `/deepseek-v4pro-high/` | `../parkour-bench/packages/deepseek-v4pro-*` | DeepSeek V4 Pro (high) |
-| `/minimax-high/` … `/minimax-max/` | `../parkour-bench/packages/minimax-*` | MiniMax M3.1 Flash (high, xhigh, max) |
+| `/minimax-medium/` … `/minimax-max/` | `../parkour-bench/packages/minimax-*` | MiniMax M3.1 Flash (medium, high, xhigh, max) |
 | `/grok-low/` … `/grok-xhigh/` | `../parkour-bench/packages/grok-*` | Grok 4.7 (low, medium, high, xhigh; it has no max) |
 
 The `../parkour-bench/packages/*` games come from
