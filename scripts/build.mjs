@@ -195,4 +195,14 @@ writeFileSync(
     .replaceAll('<!-- Models -->', cap(word(families.length)))
     .replaceAll('<!-- companies -->', word(sections.length)),
 );
+// /version.json says which build is live: the package version and the commit it was built from.
+const git = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' });
+writeFileSync(
+  join(dist, 'version.json'),
+  JSON.stringify({
+    version: JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version,
+    commit: git.status === 0 ? git.stdout.trim() : null,
+    builtAt: new Date().toISOString(),
+  }, null, 2) + '\n',
+);
 console.log('\nBuilt hub into', dist);
