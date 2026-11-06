@@ -46,11 +46,11 @@ Finishing a level unlocks the next one. **LEVEL SELECT** (on the main menu, paus
 | Command | What it does |
 |---|---|
 | `npm run dev` | Development server with hot reload |
-| `npm run build` | Type-check and produce a production build in `dist/` |
+| `npm run build` | Type-check and produce a production build in `.cloudflare/output/` (`cf build`) |
 | `npm run preview` | Serve the production build locally |
 | `npm run simulate` | Headless test: a scripted bot runs every level with the real physics and collision and fails if any can't be finished (`npm run simulate -- level3 -v` for one level with a step log) |
 | `npx tsx scripts/walljump-test.ts` | Diagnostic for wall-run → wall-jump → wall-run chains (bonks, speed kept, vertical snaps) |
-| `npm run deploy` | Build and deploy to Cloudflare Workers (`npx wrangler deploy`) |
+| `npm run deploy` | Build and deploy to Cloudflare Workers (`cf deploy`) |
 
 ## Project layout
 
@@ -80,16 +80,15 @@ src/
   audio/AudioManager.ts      Web Audio synthesised sound effects
 scripts/simulate.ts          headless completability test
 scripts/routes.ts            bot routes for each level
-worker/index.ts              Cloudflare Worker (serves dist/ via static assets, adds headers)
+worker/index.ts              Cloudflare Worker (serves the Vite build via static assets, adds headers)
 ```
 
 ## Deployment
 
-The game is served by a Cloudflare Worker using Workers Static Assets (`wrangler.jsonc`), on the custom domain `opus55-parkour.cubityfir.st` (the shared `parkour.cubityfir.st` site is deployed from `../parkour-hub`):
+The game is served by a Cloudflare Worker using Workers Static Assets (`cloudflare.config.ts`), on the custom domain `opus55-parkour.cubityfir.st` (the shared `parkour.cubityfir.st` site is deployed from `../parkour-hub`):
 
 ```bash
-npm run build
-npx wrangler deploy
+npm run deploy   # type-check, then cf deploy (builds with Vite and the Cloudflare Vite plugin)
 ```
 
 ## Notes

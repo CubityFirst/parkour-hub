@@ -61,6 +61,10 @@ builds are kept in `../parkour-hub-archive/`. The original Opus source is still 
   and security headers. Hashed files under `/<slug>/assets/` are cached forever.
 - The Worker is named `rooftop-flow`, the name of the original Opus deploy, so it
   keeps the `parkour.cubityfir.st` custom domain.
+- `cloudflare.config.ts` (worker settings) and `wrangler.config.ts` (the assets directory)
+  configure the deploy, which runs through the `cf` CLI. `wrangler.jsonc` is the old
+  Wrangler config, kept only as a fallback (`npx wrangler deploy`) until the first `cf deploy`;
+  `cf` ignores it, so delete it after that.
 
 All games share one origin, and several models picked the same localStorage key
 names. The build therefore adds a small script to the top of each game's `index.html`
@@ -80,8 +84,8 @@ Bench packages and `prebuilt` entries are already built and need nothing.
 npm install
 npm run build              # build every game and the landing page
 node scripts/build.mjs haiku   # rebuild one game (plus the landing page) only
-npm run dev                # build, then serve locally with npx wrangler dev
-npm run deploy             # build, then npx wrangler deploy
+npm run dev                # build, then serve locally with cf dev
+npm run deploy             # build, then cf deploy
 ```
 
 ## Adding a game
