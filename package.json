@@ -7,5 +7,9 @@
     "build": "node scripts/build.mjs",
     "dev": "node scripts/build.mjs && npx wrangler dev",
     "deploy": "node scripts/build.mjs && npx wrangler deploy"
+  },
+  "devDependencies": {
+    "cf": "^1.0.0-beta.19",
+    "wrangler": "^4.156.0"
   }
 }
