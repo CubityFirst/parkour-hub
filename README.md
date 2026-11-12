@@ -61,10 +61,11 @@ builds are kept in `../parkour-hub-archive/`. The original Opus source is still 
   and security headers. Hashed files under `/<slug>/assets/` are cached forever.
 - The Worker is named `rooftop-flow`, the name of the original Opus deploy, so it
   keeps the `parkour.cubityfir.st` custom domain.
-- `cloudflare.config.ts` (worker settings) and `wrangler.config.ts` (the assets directory)
-  configure the deploy, which runs through the `cf` CLI. `wrangler.jsonc` is the old
-  Wrangler config, kept only as a fallback (`npx wrangler deploy`) until the first `cf deploy`;
-  `cf` ignores it, so delete it after that.
+- `cloudflare.config.ts` holds the Worker settings (name, account, custom domain, assets
+  handling, observability) and `wrangler.config.ts` holds the build settings (the `dist/`
+  assets directory). Both are read by the `cf` CLI (`cf dev`, `cf build`, `cf deploy`).
+  There is no Wrangler config file. Use `npx wrangler` only for account-side commands that
+  take `--name rooftop-flow`, such as `deployments list`, `versions view`, `secret list` or `rollback`.
 
 All games share one origin, and several models picked the same localStorage key
 names. The build therefore adds a small script to the top of each game's `index.html`

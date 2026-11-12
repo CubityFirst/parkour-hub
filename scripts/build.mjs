@@ -23,7 +23,7 @@ const games = entries
   .filter((g) => g.status !== 'failed');
 
 mkdirSync(dist, { recursive: true });
-// Clear dist's contents rather than dist itself: on Windows a running `wrangler dev` holds the folder open.
+// Clear dist's contents rather than dist itself: on Windows a running `cf dev` holds the folder open.
 if (only.length === 0) {
   for (const entry of readdirSync(dist)) rmSync(join(dist, entry), { recursive: true, force: true });
 }
