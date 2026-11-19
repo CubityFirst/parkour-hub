@@ -13,7 +13,7 @@ export default defineConfig({
 		// Served only on the custom domain below; the workers.dev URL stays off.
 		workersDev: false,
 		observability: {
-			enabled: true,
+			enabled: false,
 		},
 		assets: {
 			htmlHandling: "auto-trailing-slash",
